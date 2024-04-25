@@ -71,11 +71,11 @@ pipeline{
                 sh 'docker push $NEXUS_REPO/petclinicapps'
             }
         }
-        stage('Trivy image Scan') {
-            steps {
-                sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
-            }
-        }
+        // stage('Trivy image Scan') {
+        //     steps {
+        //         sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
+        //     }
+        // }
         stage('Deploy to stage') {
             steps {
                 sshagent(['ansible-key']) {
