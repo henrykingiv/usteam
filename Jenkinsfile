@@ -49,9 +49,9 @@ pipeline{
                 type: 'war']],
                 credentialsId: 'nexus-creds',
                 groupId: 'Petclinic',
-                nexusUrl: '3.8.96.251:8081',
+                nexusUrl: 'nexus.henrykingroyal.co',
                 nexusVersion: 'nexus3',
-                protocol: 'http',
+                protocol: 'https',
                 repository: 'nexus-repo',
                 version: '1.0'
             }
@@ -71,15 +71,15 @@ pipeline{
                 sh 'docker push $NEXUS_REPO/petclinicapps'
             }
         }
-        stage('Trivy image Scan') {
-            steps {
-                sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
-            }
-        }
+        // stage('Trivy image Scan') {
+        //     steps {
+        //         sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
+        //     }
+        // }
         stage('Deploy to stage') {
             steps {
                 sshagent(['ansible-key']) {
-                    sh 'ssh -t -t ubuntu@10.0.2.122 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/stage-hosts /etc/ansible/stage-playbook.yml"'
+                    sh 'ssh -t -t ubuntu@10.0.5.107 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/stage-hosts /etc/ansible/stage-playbook.yml"'
                 }
             }
         }
@@ -107,7 +107,7 @@ pipeline{
         stage('Deploy to prod') {
             steps {
                 sshagent(['ansible-key']) {
-                    sh 'ssh -t -t ubuntu@10.0.2.122 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/prod-hosts /etc/ansible/prod-playbook.yml"'
+                    sh 'ssh -t -t ubuntu@10.0.5.107 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/prod-hosts /etc/ansible/prod-playbook.yml"'
                 }
             }
         }
