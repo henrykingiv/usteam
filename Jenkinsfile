@@ -56,11 +56,11 @@ pipeline{
                 version: '1.0'
             }
         }
-        // stage('Trivy fs Scan') {
-        //     steps {
-        //         sh "trivy fs . > trivyfs.txt"
-        //     }
-        // }
+        stage('Trivy fs Scan') {
+            steps {
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
         stage('Log Into Nexus Docker Repo') {
             steps {
                 sh 'docker login --username $NEXUS_USER --password $NEXUS_PASSWORD $NEXUS_REPO'
@@ -71,15 +71,15 @@ pipeline{
                 sh 'docker push $NEXUS_REPO/petclinicapps'
             }
         }
-        // stage('Trivy image Scan') {
-        //     steps {
-        //         sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
-        //     }
-        // }
+        stage('Trivy image Scan') {
+            steps {
+                sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
+            }
+        }
         stage('Deploy to stage') {
             steps {
                 sshagent(['ansible-key']) {
-                    sh 'ssh -t -t ubuntu@10.0.5.24 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/stage-hosts /etc/ansible/stage-playbook.yml"'
+                    sh 'ssh -t -t ec2-user@10.0.5.233 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/stage-hosts /etc/ansible/stage-playbook.yml"'
                 }
             }
         }
@@ -107,24 +107,24 @@ pipeline{
         stage('Deploy to prod') {
             steps {
                 sshagent(['ansible-key']) {
-                    sh 'ssh -t -t ubuntu@10.0.5.24 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/prod-hosts /etc/ansible/prod-playbook.yml"'
+                    sh 'ssh -t -t ec2-user@10.0.5.233 -o strictHostKeyChecking=no "ansible-playbook -i /etc/ansible/prod-hosts /etc/ansible/prod-playbook.yml"'
                 }
             }
         }
-        // stage('check prod website availability') {
-        //     steps {
-        //          sh "sleep 90"
-        //          sh "curl -s -o /dev/null -w \"%{http_code}\" https://prod.henrykingroyal.co"
-        //         script {
-        //             def response = sh(script: "curl -s -o /dev/null -w \"%{http_code}\" https://prod.henrykingroyal.co", returnStdout: true).trim()
-        //             if (response == "200") {
-        //                 slackSend(color: 'good', message: "The prod petclinic java application is up and running with HTTP status code ${response}.", tokenCredentialId: 'slack')
-        //             } else {
-        //                 slackSend(color: 'danger', message: "The prod petclinic java application appears to be down with HTTP status code ${response}.", tokenCredentialId: 'slack')
-        //             }
-        //         }
-        //     }
-        // }
+        stage('check prod website availability') {
+            steps {
+                 sh "sleep 90"
+                 sh "curl -s -o /dev/null -w \"%{http_code}\" https://prod.henrykingroyal.co"
+                script {
+                    def response = sh(script: "curl -s -o /dev/null -w \"%{http_code}\" https://prod.henrykingroyal.co", returnStdout: true).trim()
+                    if (response == "200") {
+                        slackSend(color: 'good', message: "The prod petclinic java application is up and running with HTTP status code ${response}.", tokenCredentialId: 'slack')
+                    } else {
+                        slackSend(color: 'danger', message: "The prod petclinic java application appears to be down with HTTP status code ${response}.", tokenCredentialId: 'slack')
+                    }
+                }
+            }
+        }
     }
 }
     
