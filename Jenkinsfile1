@@ -17,13 +17,6 @@ pipeline{
         }
       }
     }
-    stage('Docker Login') {
-      steps{
-        script {
-          dockerLogin('docker-username', 'docker-password', 'https://hub.docker.com/')
-        }
-      }
-    }
     stage('Docker Push Image') {
       steps{
         script {
