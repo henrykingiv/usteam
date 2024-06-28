@@ -17,7 +17,14 @@ pipeline{
         }
       }
     }
-
+    stage('Docker Login') {
+      steps {
+        script {
+          // Use Jenkins credentials ID
+           dockerLogin(credentialsId: 'docker-creds')
+                }
+            }
+        }
     stage('Docker Push') {
       steps {
         script {
