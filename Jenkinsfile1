@@ -17,13 +17,7 @@ pipeline{
         }
       }
     }
-    stage('Docker login') {
-      steps{
-        script {
-          dockerPush('petclinicapps', 'https://hub.docker.com/repositories/henrykingiv', 'docker-creds')
-        }
-      }
-    }
+
     stage('Docker Push') {
       steps {
         script {
