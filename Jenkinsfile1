@@ -1,0 +1,35 @@
+@Library('shared-lib') _
+
+pipeline{
+  agent any
+  stages{
+    stage('Maven Build') {
+      steps{
+        script {
+          mavenBuild()
+        }
+      }
+    }
+    stage('Build Image') {
+      steps{
+        script {
+          dockerBuild('petclinicapps', ',')
+        }
+      }
+    }
+    stage('Docker Login') {
+      steps{
+        script {
+          dockerLogin('docker-username', 'docker-password', 'https://hub.docker.com/repositories/henrykingiv')
+        }
+      }
+    }
+    stage('Docker Push Image') {
+      steps{
+        script {
+          dockerPush('petclinicapps', 'https://hub.docker.com/repositories/henrykingiv', 'docker-creds')
+        }
+      }
+    }
+  }
+}
