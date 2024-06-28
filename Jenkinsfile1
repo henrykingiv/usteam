@@ -20,14 +20,14 @@ pipeline{
     stage('Docker Push Image') {
       steps{
         script {
-          dockerPush('henrykingiv/petclinicapps', 'https://hub.docker.com/repositories/henrykingiv', 'docker-creds')
+          dockerPush('petclinicapps', 'https://hub.docker.com/repositories/henrykingiv', 'docker-creds')
         }
       }
     }
     stage('Docker Push') {
       steps {
         script {
-          DockerUtils.push('henrykingiv/petclinicapps:latest', 'https://hub.docker.com/repositories/henrykingiv', env.DOCKER_USERNAME, env.DOCKER_PASSWORD)
+          DockerUtils.push('petclinicapps:latest', 'https://hub.docker.com/repositories/henrykingiv', env.DOCKER_USERNAME, env.DOCKER_PASSWORD)
                 }
             }
         }
