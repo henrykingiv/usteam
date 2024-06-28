@@ -17,7 +17,7 @@ pipeline{
         }
       }
     }
-    stage('Docker Push Image') {
+    stage('Docker login') {
       steps{
         script {
           dockerPush('petclinicapps', 'https://hub.docker.com/repositories/henrykingiv', 'docker-creds')
