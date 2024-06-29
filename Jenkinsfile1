@@ -17,6 +17,13 @@ pipeline{
         }
       }
     }
+    stage('Docker Login') {
+      steps{
+        script {
+          dockerLogin()
+        }
+      }
+    }
     stage('Docker Push') {
       steps {
         script {
