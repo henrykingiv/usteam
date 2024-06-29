@@ -13,7 +13,7 @@ pipeline{
     stage('Build Image') {
       steps{
         script {
-          dockerBuild('henrykingiv/petclinicapps:tag')
+          dockerBuild('henrykingiv/petclinicapps')
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline{
       steps {
         script {
           // Use Jenkins credentials ID
-           pushDocker('henrykingiv/petclinicapps:tag', 'docker-creds', 'docker')
+           pushDocker('henrykingiv/petclinicapps', 'docker-creds', 'docker')
                 }
             }
         }
