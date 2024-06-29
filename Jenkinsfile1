@@ -21,7 +21,7 @@ pipeline{
       steps {
         script {
           // Use Jenkins credentials ID
-           dockerPush('petclinicapps', 'docker-creds', 'https://hub.docker.com/repositories/henrykingiv')
+           pushDocker('petclinicapps', 'docker-creds', 'https://hub.docker.com/repositories/henrykingiv')
                 }
             }
         }
