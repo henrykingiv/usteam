@@ -3,7 +3,7 @@
 pipeline{
   agent any
   stages{
-    stage('Maven Build') {
+    stage('Maven Artifact Build') {
       steps{
         script {
           mavenBuild()
