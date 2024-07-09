@@ -14,4 +14,5 @@ RUN apt update -y && apt install curl -y
 # ENV NEW_RELIC_LICENCE_KEY="eu01xx2761148396df10a82ea5423bb031e1NRAL"
 WORKDIR /usr/local/tomcat/webapps
 # ADD ./newrelic.yml /usr/local/tomcat/webapps/newrelic/newrelic.yml
-ENTRYPOINT [ "java", "-jar", "spring-petclinic-2.4.2.war", "--server.port=8080"]
+EXPOSE 8080
+ENTRYPOINT [ "java", "-jar", "spring-petclinic-2.4.2.war"]
