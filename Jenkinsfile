@@ -3,7 +3,6 @@ pipeline {
     environment {
         NEXUS_USER = credentials('nexus-username')
         NEXUS_PASSWORD = credentials('nexus-password')
-        NEXUS_REPO = credentials('nexus-repo')
         AWS_REGION = 'eu-west-2'
         ECR_REPO = 'ecr-repo-name'
         AWS_ACCOUNT_ID = '378652575940'
