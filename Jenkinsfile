@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     agent any
     environment {
         NEXUS_USER = credentials('nexus-username')
@@ -84,6 +84,7 @@ pipeline{
                 sh "trivy image $NEXUS_REPO/petclinicapps > trivyfs.txt"
             }
         }
+    }
 }
     
 
