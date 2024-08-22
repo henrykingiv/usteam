@@ -56,7 +56,7 @@ pipeline{
                 version: '1.0'
             }
         }
-        stage('Trivy fs Scan') {
+        stage('Trivy file-system Scan') {
             steps {
                 sh "trivy fs . > trivyfs.txt"
             }
