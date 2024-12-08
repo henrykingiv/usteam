@@ -67,7 +67,7 @@ pipeline {
                 type: 'war']],
                 credentialsId: 'nexus-creds',
                 groupId: 'Petclinic',
-                nexusUrl: 'nexus.henrykingroyal.co',
+                nexusUrl: 'nexus.royalhenryking.com',
                 nexusVersion: 'nexus3',
                 protocol: 'https',
                 repository: 'nexus-repo',
