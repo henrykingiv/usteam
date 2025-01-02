@@ -18,7 +18,7 @@ pipeline {
                         sh "docker build -t ${URL_REGISTRY}/$ECR_REPO ."
 
                         // Tag Docker image
-                        sh "docker tag ${URL_REGISTRY}/$ECR_REPO:1.01 ${URL_REGISTRY}/$ECR_REPO:1.01"
+                        sh "docker tag ${URL_REGISTRY}/$ECR_REPO:latest ${URL_REGISTRY}/$ECR_REPO:latest"
 
                         // Push Docker image to ECR
                         sh "docker push ${URL_REGISTRY}/$ECR_REPO:1.01"
